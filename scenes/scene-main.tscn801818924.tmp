@@ -1,0 +1,59 @@
+[gd_scene load_steps=5 format=3 uid="uid://bo44m1gbkg8qg"]
+
+[ext_resource type="Script" uid="uid://pl0epmr0q3nx" path="res://scripts/script-main.gd" id="1_kdukv"]
+[ext_resource type="PackedScene" uid="uid://cxgqviy2jgbae" path="res://scenes/scenes-ballon-spawner.tscn" id="2_kdukv"]
+[ext_resource type="Script" uid="uid://des7qg6xj7j6r" path="res://scripts/script-upgrade-opener.gd" id="3_2lnc1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdukv"]
+size = Vector2(680, 365)
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_kdukv")
+
+[node name="ballon-spawner" parent="." instance=ExtResource("2_kdukv")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ballon-spawner"]
+position = Vector2(601, 326)
+shape = SubResource("RectangleShape2D_kdukv")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_2lnc1")
+
+[node name="panel-upgrade-opener" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 263.0
+offset_top = 570.0
+offset_right = 934.0
+offset_bottom = 621.0
+
+[node name="upgrade-window" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 127.0
+offset_top = 48.0
+offset_right = 1083.0
+offset_bottom = 660.0
+
+[node name="button-less-time-spawn" type="Button" parent="UI/upgrade-window"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 90.0
+offset_top = 65.0
+offset_right = 304.0
+offset_bottom = 221.0
+text = "less spawn time"
+
+[node name="button-value-mult" type="Button" parent="UI/upgrade-window"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 642.0
+offset_top = 61.0
+offset_right = 856.0
+offset_bottom = 217.0
+text = "more value"
+
+[connection signal="mouse_entered" from="UI/panel-upgrade-opener" to="UI" method="_on_panelupgradeopener_mouse_entered"]
+[connection signal="mouse_exited" from="UI/upgrade-window" to="UI" method="_on_upgradewindow_mouse_exited"]

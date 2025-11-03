@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxgqviy2jgbae"]
+
+[ext_resource type="Script" uid="uid://l13sng56hkxp" path="res://scripts/script-ballon-spawner.gd" id="1_b5w3o"]
+
+[node name="ballon-spawner" type="Area2D"]
+script = ExtResource("1_b5w3o")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
