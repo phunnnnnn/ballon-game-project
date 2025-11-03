@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bo44m1gbkg8qg"]
+[gd_scene load_steps=7 format=3 uid="uid://bo44m1gbkg8qg"]
 
 [ext_resource type="Script" uid="uid://pl0epmr0q3nx" path="res://scripts/script-main.gd" id="1_kdukv"]
 [ext_resource type="PackedScene" uid="uid://cxgqviy2jgbae" path="res://scenes/scenes-ballon-spawner.tscn" id="2_kdukv"]
 [ext_resource type="Script" uid="uid://des7qg6xj7j6r" path="res://scripts/script-upgrade-opener.gd" id="3_2lnc1"]
-[ext_resource type="Script" uid="uid://c4o2yklrjubtj" path="res://scripts/label_combo.gd" id="4_roouc"]
+[ext_resource type="Script" uid="uid://c4o2yklrjubtj" path="res://scripts/label-combo.gd" id="4_roouc"]
+[ext_resource type="Script" uid="uid://bnon3j0wmvvpi" path="res://scripts/script-combo-decay.gd" id="5_2ty5u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdukv"]
 size = Vector2(680, 365)
@@ -18,6 +19,7 @@ position = Vector2(601, 326)
 shape = SubResource("RectangleShape2D_kdukv")
 
 [node name="UI" type="Control" parent="."]
+z_index = 5
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -50,11 +52,31 @@ text = "less spawn time"
 [node name="button-value-mult" type="Button" parent="UI/upgrade-window"]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 678.0
-offset_top = 70.0
-offset_right = 892.0
-offset_bottom = 226.0
+offset_left = 339.0
+offset_top = 61.0
+offset_right = 553.0
+offset_bottom = 217.0
 text = "more value
+"
+
+[node name="button-more-decay-time" type="Button" parent="UI/upgrade-window"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 84.0
+offset_top = 248.0
+offset_right = 298.0
+offset_bottom = 404.0
+text = "more-decay-time
+"
+
+[node name="button-more-combo-max" type="Button" parent="UI/upgrade-window"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 328.0
+offset_top = 250.0
+offset_right = 542.0
+offset_bottom = 406.0
+text = "more-combo-max
 "
 
 [node name="Label-combo" type="Label" parent="UI"]
@@ -68,6 +90,9 @@ script = ExtResource("4_roouc")
 
 [node name="timer-combo-decay" type="Timer" parent="."]
 unique_name_in_owner = true
+one_shot = true
+script = ExtResource("5_2ty5u")
 
 [connection signal="mouse_entered" from="UI/panel-upgrade-opener" to="UI" method="_on_panelupgradeopener_mouse_entered"]
 [connection signal="mouse_exited" from="UI/upgrade-window" to="UI" method="_on_upgradewindow_mouse_exited"]
+[connection signal="timeout" from="timer-combo-decay" to="timer-combo-decay" method="_on_timeout"]

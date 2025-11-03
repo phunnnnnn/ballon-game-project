@@ -23,7 +23,10 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		])
 		
 		AutoVariable.money += reward
-		AutoVariable.set_combo_value(AutoVariable.combo + 1)
+		if AutoVariable.combo < AutoVariable.combo_max:
+			AutoVariable.set_combo_value(AutoVariable.combo + 1)
+		else:
+			AutoVariable.set_combo_value(AutoVariable.combo)
 		
 		print("current money = ", AutoVariable.money)
 		
