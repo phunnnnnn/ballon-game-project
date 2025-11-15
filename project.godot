@@ -17,7 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-AutoVariable="*res://scripts/auto-variable.gd"
+AutoVariable="*res://scripts-auto/auto-variable.gd"
+AutoData="*res://scripts-auto/auto-data.gd"
 
 [rendering]
 

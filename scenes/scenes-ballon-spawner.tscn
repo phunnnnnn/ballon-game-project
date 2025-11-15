@@ -5,6 +5,10 @@
 [node name="ballon-spawner" type="Area2D"]
 script = ExtResource("1_b5w3o")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="timer_spawn" type="Timer" parent="."]
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="timer_explode" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="timer_spawn" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="timer_explode" to="." method="_on_timer_explode_timeout"]

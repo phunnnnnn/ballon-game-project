@@ -6,32 +6,18 @@ extends Label
 func _ready() -> void:
 	label_combo.text = "current combo : %d / %d" %[
 		AutoVariable.combo,
-		AutoVariable.combo_max
+		AutoData.ComboPressure[AutoVariable.upgrade_levels["ComboPressure"]]["limit"]
 		]
-	AutoVariable.connect("combo_value_changed",_on_combo_value_changed)
 
 func _process(delta: float) -> void:
 	if timer_combo_decay.time_left > 0:
 		label_combo.text = "current combo : %d / %d\ntime until decay :%.2f" %[
 			AutoVariable.combo,
-			AutoVariable.combo_max,
+			AutoData.ComboPressure[AutoVariable.upgrade_levels["ComboPressure"]]["limit"],
 			timer_combo_decay.time_left
 			]
 	else:
 		label_combo.text = "current combo : %d / %d" %[
 			AutoVariable.combo,
-			AutoVariable.combo_max
-		]
-
-func _on_combo_value_changed(value):
-	if timer_combo_decay.time_left > 0:
-		label_combo.text = "current combo : %d / %d\ntime until decay :%.2f" %[
-			AutoVariable.combo,
-			AutoVariable.combo_max,
-			AutoVariable.combo_decay_time - timer_combo_decay.time_left
-			]
-	else:
-		label_combo.text = "current combo : %d / %d" %[
-			AutoVariable.combo,
-			AutoVariable.combo_max
+			AutoData.ComboPressure[AutoVariable.upgrade_levels["ComboPressure"]]["limit"]
 		]
