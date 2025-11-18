@@ -21,9 +21,9 @@ func explode():
 		AutoVariable.combo += 1
 
 	# reward
-	var _InflationRate = AutoData.InflationRate_value[AutoVariable.upgrade_levels["InflationRate"]]
+	var _InflationRate = AutoData.InflationRate[AutoVariable.upgrade_levels.InflationRate].value
 	var _combo = AutoVariable.combo
-	var _variant = AutoData.EliteBalloons.mult[variant]
+	var _variant = AutoData.EliteBalloons_mult[variant]
 	#fix variable
 	if _combo < 0:
 		_combo += 1
@@ -43,17 +43,25 @@ func explode():
 	if exploded < AutoData.PhantomPop[AutoVariable.upgrade_levels["PhantomPop"]]["limit"] :
 		if _should_explode():
 			print("💥 Exploded!")
-			_shoot_sting()
+			willChainReaction()
 		else:
 			print("🎈 Safe balloon")
 			exploded += 1
 	else:
 		print("💥 Exploded!")
-		_shoot_sting()
+		willChainReaction()
 		call_deferred("queue_free")
 
 func _should_explode() -> bool:
 	return randf() < AutoData.PhantomPop[AutoVariable.upgrade_levels["PhantomPop"]]["chance"]
+
+func willChainReaction():
+	var _level = AutoVariable.upgrade_levels
+	var _ChainReaction = AutoData.ChainReaction.get(_level.ChainReaction,0).chance
+	var random = randf()
+	if random < _ChainReaction:
+		_shoot_sting()
+	
 
 func _shoot_sting():
 	var instance = sting.instantiate()

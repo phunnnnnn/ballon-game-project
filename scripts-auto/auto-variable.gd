@@ -3,7 +3,7 @@ extends Node
 signal upgrade(upgrade_type: String)
 
 # --- Player variables ---
-var money: float = 0.0
+var money: float = 9999999999999999.0
 var combo: int = 0
 
 # --- Upgrade levels ---
@@ -26,11 +26,37 @@ func _on_upgrade_triggered(upgrade_type: String) -> void:
 	if not upgrade_levels.has(upgrade_type):
 		push_warning("Unknown upgrade type: %s" % upgrade_type)
 		return
-	
-	upgrade_levels[upgrade_type] += 1
-	print("Upgraded %s to level %d" % [upgrade_type, upgrade_levels[upgrade_type]])
-	# Optional: handle special logic for each upgrade
 
+	var current_level = upgrade_levels[upgrade_type]
+
+	# Check max level
+	var max_level = AutoData[upgrade_type].size() - 1
+
+	if current_level >= max_level:
+		print("%s is already max level!" % upgrade_type)
+		return
+
+	# Find price for *next level*
+	var price = AutoData[upgrade_type].get(current_level, null).price
+	if price == null:
+		push_warning("Missing price for %s at level %d" % [upgrade_type, current_level])
+		return
+
+	# Check player money
+	if money < price:
+		print("Not enough money for upgrade %s. Need %d, have %d" % [upgrade_type, price, money])
+		return
+
+	# Deduct money
+	money -= price
+
+	# Apply upgrade
+	upgrade_levels[upgrade_type] += 1
+	var new_level = upgrade_levels[upgrade_type]
+
+	print("Bought upgrade %s → Level %d (Cost: %d)" % [upgrade_type, new_level, price])
+
+	# Perform upgrade-specific logic
 	match upgrade_type:
 		"InflationRate":
 			_increase_inflation_rate()
@@ -50,6 +76,7 @@ func _on_upgrade_triggered(upgrade_type: String) -> void:
 			_increase_auto_detonate()
 		_:
 			pass
+
 
 
 # --- Individual upgrade logic (can be customized later) ---

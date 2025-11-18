@@ -1,13 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo44m1gbkg8qg"]
+[gd_scene load_steps=10 format=3 uid="uid://bo44m1gbkg8qg"]
 
 [ext_resource type="Script" uid="uid://pl0epmr0q3nx" path="res://scripts/script-main.gd" id="1_kdukv"]
 [ext_resource type="PackedScene" uid="uid://cxgqviy2jgbae" path="res://scenes/scenes-ballon-spawner.tscn" id="2_kdukv"]
 [ext_resource type="Script" uid="uid://des7qg6xj7j6r" path="res://scripts/script-ui.gd" id="3_2lnc1"]
+[ext_resource type="Shader" uid="uid://c2j440vsmy534" path="res://assets/shaders/background.gdshader" id="4_julpe"]
 [ext_resource type="Script" uid="uid://c4o2yklrjubtj" path="res://scripts/label-combo.gd" id="4_roouc"]
 [ext_resource type="Script" uid="uid://bnon3j0wmvvpi" path="res://scripts/script-combo-decay.gd" id="5_2ty5u"]
+[ext_resource type="Script" uid="uid://doinfxhqqaakl" path="res://scripts/label_money.gd" id="6_aeqww"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kdukv"]
 size = Vector2(680, 365)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aeqww"]
+shader = ExtResource("4_julpe")
+shader_parameter/speed = 0.2
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_kdukv")
@@ -26,6 +32,17 @@ offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_2lnc1")
 
+[node name="backgroud" type="ColorRect" parent="UI"]
+visible = false
+z_index = -5
+material = SubResource("ShaderMaterial_aeqww")
+layout_mode = 0
+offset_left = -29.0
+offset_top = -9.0
+offset_right = 1178.0
+offset_bottom = 685.0
+mouse_filter = 2
+
 [node name="panel-upgrade-opener" type="Panel" parent="UI"]
 layout_mode = 0
 offset_left = 263.0
@@ -34,6 +51,7 @@ offset_right = 934.0
 offset_bottom = 621.0
 
 [node name="upgrade-window" type="Panel" parent="UI"]
+visible = false
 layout_mode = 0
 offset_left = 127.0
 offset_top = 48.0
@@ -121,6 +139,15 @@ offset_right = 206.0
 offset_bottom = 43.0
 text = "current combo : "
 script = ExtResource("4_roouc")
+
+[node name="Label-money" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 85.0
+offset_right = 197.0
+offset_bottom = 108.0
+text = "money : Gold"
+script = ExtResource("6_aeqww")
 
 [node name="timer-combo-decay" type="Timer" parent="."]
 unique_name_in_owner = true

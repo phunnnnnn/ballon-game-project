@@ -8,11 +8,12 @@ extends Area2D
 
 @export var spawn_interval: float = 2.0
 
+var getInterval = AutoData.AirRush[AutoVariable.upgrade_levels["AirRush"]].interval
+
 func _ready() -> void:
 	
 	#setup
-	spawn_interval = AutoData.AirRush_value[AutoVariable.upgrade_levels["AirRush"]]
-	spawner_timer.wait_time = spawn_interval
+	spawner_timer.wait_time = getInterval
 	spawner_timer.start()
 	
 	#connect signal
@@ -67,8 +68,7 @@ func _on_upgrade_triggered(upgrade_type: String) -> void:
 		"InflationRate":
 			pass
 		"AirRush":
-			spawn_interval = AutoData.AirRush_value[AutoVariable.upgrade_levels["AirRush"]]
-			spawner_timer.wait_time = spawn_interval
+			spawner_timer.wait_time = getInterval
 			spawner_timer.start()
 		"SkyOverload":
 			pass
@@ -87,7 +87,7 @@ func _on_upgrade_triggered(upgrade_type: String) -> void:
 
 func get_random_ballon_variant(level: int) -> String:
 
-	var chances = AutoData.EliteBalloons["chance"].get(level, AutoData.EliteBalloons["chance"][1])
+	var chances = AutoData.EliteBalloons.get(level,0).chance
 
 	var rand = randf()
 	var cumulative = 0.0
